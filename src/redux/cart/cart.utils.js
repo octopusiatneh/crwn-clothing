@@ -15,3 +15,19 @@ export const addItemToCart = (cartItems, itemAddToCart) => {
   // if false => return a new array which all of existing cartItems and the new item which base quantity is 1
   return [...cartItems, { ...itemAddToCart, quantity: 1 }];
 };
+
+export const removeItemFromCart = (cartItems, itemToRemove) => {
+  const existingCartItem = cartItems.find(
+    cartItem => cartItem.id === itemToRemove.id
+  );
+
+  if (existingCartItem.quantity === 1) {
+    return cartItems.filter(cartItem => cartItem.id !== itemToRemove.id);
+  }
+
+  return cartItems.map(cartItem =>
+    cartItem.id === itemToRemove.id
+      ? { ...cartItem, quantity: cartItem.quantity - 1 }
+      : cartItem
+  );
+};
